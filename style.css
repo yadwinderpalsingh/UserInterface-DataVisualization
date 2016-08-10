@@ -4,12 +4,16 @@ body {
     margin: 0
 }
 
+* {
+    box-sizing: border-box;
+}
+
 .filter {
     position: absolute;
     margin: 0;
     bottom: 0;
     display: inline-block;
-    background: #e74c3c;
+    background: #8d9758;
     width: 100%;
-    padding: 15px;
+    padding: 20px 50px 16px;
 }
