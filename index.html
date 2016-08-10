@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Highcharts Example</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <style type="text/css">
+        #container {
+            height: 400px;
+            min-width: 310px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/javascript">
+        var year = [];
+        var age = [];
+        var malePopulation = [];
+        var femalePopulation = [];
+        var gender = ["Male", "Female"];
+
+        $(function () {
+            //            $('#container').highcharts({
+            //                chart: {
+            //                    type: 'column'
+            //                    , options3d: {
+            //                        enabled: true
+            //                        , alpha: 15
+            //                        , beta: 15
+            //                        , viewDistance: 25
+            //                        , depth: 40
+            //                    }
+            //                },
+            //
+            //                xAxis: {
+            //                    categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+            //                },
+            //
+            //                yAxis: {
+            //                    allowDecimals: false
+            //                    , min: 0
+            //                    , title: {
+            //                        text: 'Number of fruits'
+            //                    }
+            //                },
+            //
+            //                tooltip: {
+            //                    headerFormat: '<b>{point.key}</b><br>'
+            //                    , pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}'
+            //                },
+            //
+            //                plotOptions: {
+            //                    column: {
+            //                        stacking: 'normal'
+            //                        , depth: 40
+            //                    }
+            //                },
+            //
+            //                series: [{
+            //                    name: 'John'
+            //                    , data: [5, 3, 4, 7, 2]
+            //                    , stack: 'male'
+            //        }, {
+            //                    name: 'Joe'
+            //                    , data: [3, 4, 4, 2, 5]
+            //                    , stack: 'female'
+            //        }]
+            //            }); 
+
+            // x-axis: age--------------------
+            // y-axis: population------------
+
+                        var options = {
+            				chart: {
+            					//renderTo: 'container',
+            					type: 'column',
+                                 options3d: {
+                                    enabled: true
+                                    , alpha: 15
+                                    , beta: 15
+                                    , viewDistance: 25
+                                    , depth: 40
+                                }
+            				},
+                            xAxis: {
+                                categories: []
+                            },
+            
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: 'Age'
+                                }
+                            },
+            
+                            tooltip: {
+                                headerFormat: '<b>{point.key}</b><br>'
+                                , pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}'
+                            },
+            
+                            plotOptions: {
+                                column: {
+                                    stacking: 'normal'
+                                    , depth: 40
+                                }
+                            },
+            				series: []
+            			};
+                        
+            $.get('population.csv', function (data) {
+                //				// Split the lines
+                debugger;
+                var lines = data.split('\n');
+                $.each(lines, function (lineNo, line) {
+                    var items = line.split(',');
+
+                    // header line containes categories
+                    if (lineNo == 0) {
+                        //						$.each(items, function(itemNo, item) {
+                        //							if (itemNo > 0) options.xAxis.categories.push(item);
+                        //						});
+                    }
+
+
+                    // the rest of the lines contain data with their name in the first position
+                    else {
+                        if (items[2] == gender[0]) {
+                            malePopulation.push(parseInt(items[3]));
+                        } else {
+                            femalePopulation.push(parseInt(items[3]));
+                        }
+                        if ( age.length < 19) {
+                            if (age.length == 0) {
+                                age.push(parseInt(items[1]));
+                            } else {
+                                if (age[age.length-1] !== parseInt(items[1]) ) {
+                                    age.push(parseInt(items[1]));
+                                }
+                            } 
+                        }
+                        //						var series = { 
+                        //						};
+                        //						$.each(items, function(itemNo, item) {
+                        //							if (itemNo == 0) {
+                        //								series.year = parseFloat(item);
+                        //							} else if(itemNo == 1){
+                        //                                //age.
+                        //                                series.age = parseFloat(item);
+                        //                            } else if(itemNo == 2){
+                        //                                series.gender = item;
+                        //                            } else if(itemNo == 3){
+                        //                                series.population = parseFloat(item);
+                        //                            } 
+                        //						});
+                        //options.series.push(series);
+                    }
+                });
+                options.xAxis.categories = age;
+//                options.series.push(malePopulation);
+                $('#container').highcharts(options);
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <div id="container" style="height: 400px"></div>
+</body>
+
+</html>
