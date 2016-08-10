@@ -1,0 +1,15 @@
+body {
+    overflow: hidden;
+    font-family: 'open sans', sans-serif;
+    margin: 0
+}
+
+.filter {
+    position: absolute;
+    margin: 0;
+    bottom: 0;
+    display: inline-block;
+    background: #e74c3c;
+    width: 100%;
+    padding: 15px;
+}
