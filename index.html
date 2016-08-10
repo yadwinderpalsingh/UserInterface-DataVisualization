@@ -126,11 +126,7 @@
 
                     // the rest of the lines contain data with their name in the first position
                     else {
-                        if (items[2] == gender[0]) {
-                            malePopulation.push(parseInt(items[3]));
-                        } else {
-                            femalePopulation.push(parseInt(items[3]));
-                        }
+                        
                         if ( age.length < 19) {
                             if (age.length == 0) {
                                 age.push(parseInt(items[1]));
@@ -140,6 +136,27 @@
                                 }
                             } 
                         }
+                        var obj = {};
+                        var count = 0;
+                        $.each(age, function(ageNumber, ageObj) {
+                            obj.id = age[count];
+                             if (items[2] == gender[0]) {
+                                 debugger;
+                                 obj.id = gender[0];
+                                 obj[age[count]][gender][0] = push(parseInt(items[3]));
+//                                malePopulation.push(parseInt(items[3]));
+                            } else {
+//                                femalePopulation.push(parseInt(items[3]));
+                            }
+                            count++;
+                        });
+                        
+                        if (items[2] == gender[0]) {
+                            malePopulation.push(parseInt(items[3]));
+                        } else {
+                            femalePopulation.push(parseInt(items[3]));
+                        }
+                        
                         //						var series = { 
                         //						};
                         //						$.each(items, function(itemNo, item) {
