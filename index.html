@@ -8,10 +8,21 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <style type="text/css">
         #container {
-            height: 400px;
-            min-width: 310px;
-            max-width: 800px;
+            height: calc(100% - 80px);
+            padding: 30px;
+            width: 100%;
             margin: 0 auto;
+        }
+        html, body {
+    height: 100%;
+    width: 100%;
+}
+body {
+    overflow: hidden;
+    margin: 0;
+}
+        * {
+            box-sizing: border-box
         }
     </style>
     <script type="text/javascript">
@@ -19,55 +30,10 @@
         var age = [];
         var malePopulation = [];
         var femalePopulation = [];
-        var gender = ["Male", "Female"];
+        var gender = ["male", "female"];
 
         $(function () {
-            //            $('#container').highcharts({
-            //                chart: {
-            //                    type: 'column'
-            //                    , options3d: {
-            //                        enabled: true
-            //                        , alpha: 15
-            //                        , beta: 15
-            //                        , viewDistance: 25
-            //                        , depth: 40
-            //                    }
-            //                },
-            //
-            //                xAxis: {
-            //                    categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
-            //                },
-            //
-            //                yAxis: {
-            //                    allowDecimals: false
-            //                    , min: 0
-            //                    , title: {
-            //                        text: 'Number of fruits'
-            //                    }
-            //                },
-            //
-            //                tooltip: {
-            //                    headerFormat: '<b>{point.key}</b><br>'
-            //                    , pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}'
-            //                },
-            //
-            //                plotOptions: {
-            //                    column: {
-            //                        stacking: 'normal'
-            //                        , depth: 40
-            //                    }
-            //                },
-            //
-            //                series: [{
-            //                    name: 'John'
-            //                    , data: [5, 3, 4, 7, 2]
-            //                    , stack: 'male'
-            //        }, {
-            //                    name: 'Joe'
-            //                    , data: [3, 4, 4, 2, 5]
-            //                    , stack: 'female'
-            //        }]
-            //            }); 
+ 
 
             // x-axis: age--------------------
             // y-axis: population------------
@@ -108,11 +74,31 @@
                             },
             				series: []
             			};
+            
+            readDataFile(2000, options);
                         
+        });
+        
+        function readDataFile(year, options){
+            debugger;
+            var obj = {};
             $.get('population.csv', function (data) {
-                //				// Split the lines
-                debugger;
+                
+                // Split the lines
                 var lines = data.split('\n');
+               
+                var maleobj = {
+                    name: "Male",
+                    data: [],
+                    stack: "male"
+                };
+                
+                var femaleobj = {
+                    name: "Female",
+                    data: [],
+                    stack: "female"
+                };
+                
                 $.each(lines, function (lineNo, line) {
                     var items = line.split(',');
 
@@ -124,9 +110,8 @@
                     }
 
 
-                    // the rest of the lines contain data with their name in the first position
                     else {
-                        
+                        // age groups
                         if ( age.length < 19) {
                             if (age.length == 0) {
                                 age.push(parseInt(items[1]));
@@ -136,49 +121,26 @@
                                 }
                             } 
                         }
-                        var obj = {};
-                        var count = 0;
-                        $.each(age, function(ageNumber, ageObj) {
-                            obj.id = age[count];
-                             if (items[2] == gender[0]) {
-                                 debugger;
-                                 obj.id = gender[0];
-                                 obj[age[count]][gender][0] = push(parseInt(items[3]));
-//                                malePopulation.push(parseInt(items[3]));
-                            } else {
-//                                femalePopulation.push(parseInt(items[3]));
-                            }
-                            count++;
-                        });
                         
-                        if (items[2] == gender[0]) {
-                            malePopulation.push(parseInt(items[3]));
-                        } else {
-                            femalePopulation.push(parseInt(items[3]));
+                        // data by selected year
+                        if(parseInt(items[0]) === year && items[2] === gender[0]){
+                            maleobj.data.push(parseInt(items[3]));
+                        }
+                        else if(parseInt(items[0]) === year){
+                            femaleobj.data.push(parseInt(items[3]));
                         }
                         
-                        //						var series = { 
-                        //						};
-                        //						$.each(items, function(itemNo, item) {
-                        //							if (itemNo == 0) {
-                        //								series.year = parseFloat(item);
-                        //							} else if(itemNo == 1){
-                        //                                //age.
-                        //                                series.age = parseFloat(item);
-                        //                            } else if(itemNo == 2){
-                        //                                series.gender = item;
-                        //                            } else if(itemNo == 3){
-                        //                                series.population = parseFloat(item);
-                        //                            } 
-                        //						});
-                        //options.series.push(series);
+//                     
                     }
+                    
                 });
+                
                 options.xAxis.categories = age;
+                options.series.push(maleobj);
+                options.series.push(femaleobj);
                 $('#container').highcharts(options);
             });
-
-        });
+        }
     </script>
 </head>
 
@@ -188,7 +150,7 @@
     <script src="https://code.highcharts.com/highcharts-3d.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-    <div id="container" style="height: 400px"></div>
+    <div id="container"></div>
 </body>
 
 </html>
