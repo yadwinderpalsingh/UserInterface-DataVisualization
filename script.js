@@ -6,7 +6,6 @@ var gender = ["Male", "Female"];
         $(document).ready(function() {
             rawData = readData();
         });
-        var chart;
         
         var options = {
             chart: {
@@ -25,7 +24,7 @@ var gender = ["Male", "Female"];
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Age'
+                    text: 'Population'
                 }
             },
             tooltip: {
@@ -143,17 +142,20 @@ var gender = ["Male", "Female"];
                 
                 
                 if (options.series.length > 0) {
-                    options.series.splice($.inArray(options.series[0], options.series),1);
-                    options.series.splice($.inArray(options.series[0], options.series),1);
-                    options.series.push(maleobj);
-                    options.series.push(femaleobj);
-                    $('#container').highcharts(options);
+                    debugger;
+                    var dataOptions = $('#container').highcharts().options;
+////                    
+                    dataOptions.series.splice($.inArray(options.series[0], options.series),1);
+                    dataOptions.series.splice($.inArray(options.series[0], options.series),1);
+                    dataOptions.series.push(maleobj);
+                    dataOptions.series.push(femaleobj);
+                    $('#container').highcharts(dataOptions);
+                    
                 } else {
                     options.series.push(maleobj);
                     options.series.push(femaleobj);
                     $('#container').highcharts(options);
                 }
-            chart = $('#container').highcharts();
         }
 
 
@@ -161,5 +163,5 @@ var gender = ["Male", "Female"];
     $('.sliders input').on('input change', function () {
         var dataChart = $('#container').highcharts();
         dataChart.options.chart.options3d[this.id] = this.value;
-        chart.redraw(false);
+        dataChart.redraw(false);
     });
