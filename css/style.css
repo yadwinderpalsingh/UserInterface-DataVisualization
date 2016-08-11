@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
 html,
 body {
     height: 100%;
@@ -6,7 +8,7 @@ body {
 
 body {
     overflow: hidden;
-    font-family: 'open sans', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     margin: 0
 }
 
@@ -54,4 +56,27 @@ body {
     width: 100%;
     position: fixed;
     bottom: 15px;
+}
+
+input[type=range]{
+    -webkit-appearance: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    height: 3px;
+    background: #ccc;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #7cb5ec !important;
+    margin-top: -6px;
+}
+
+input[type=range]:focus {
+    outline: none;
 }
