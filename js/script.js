@@ -16,7 +16,7 @@ var gender = ["Male", "Female"],
             }
         },
         title: {
-            text: 'Distribution of age groups in the United States over the last 150 years'
+            text: 'Distribution of age groups in the United States over the last 140 years'
         },
         xAxis: {
             categories: []
