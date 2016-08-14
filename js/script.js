@@ -29,7 +29,7 @@ var gender = ["Male", "Female"],
         },
         tooltip: {
             headerFormat: '<b>{point.key}</b><br>',
-            pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}'
+            pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.stackTotal}'
         },
         plotOptions: {
             column: {
